@@ -1,0 +1,22 @@
+// Import Bootstrap 4 Library
+@import "C:/Users/Dipa/Documents/store-html-starter-master/vendor/bootstrap/scss/bootstrap.scss";
+
+@import "global";
+@import "C:/Users/Dipa/Documents/store-html-starter-master/style/_fonts.scss";
+@import "navbar";
+
+@import "pages/home";
+@import "pages/details";
+@import "pages/cart";
+@import "pages/success";
+@import "pages/auth";
+@import "pages/dashboard";
+
+@import "C:/Users/Dipa/Documents/store-html-starter-master/style/components/_categories.scss";
+@import "C:/Users/Dipa/Documents/store-html-starter-master/style/components/_products.scss";
+@import "C:/Users/Dipa/Documents/store-html-starter-master/style/components/_breadcrumbs.scss";
+@import "components/card";
+@import "components/card_list";
+@import "components/card_dahsboard";
+
+@import "transitions/slide-fade";
