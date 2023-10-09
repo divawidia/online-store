@@ -95,7 +95,7 @@
                                                 <div class="product-subtitle">KNDAKSDNKAJ</div>
                                             </div>
                                             <div class="col-12 col-md-3">
-                                                <div class="product-title">Status</div>
+                                                <div class="product-title">Shipping Status</div>
                                                 <select
                                                     name="shipping_status"
                                                     id="status"
