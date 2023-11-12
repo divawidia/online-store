@@ -11,7 +11,7 @@ class Product extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'name', 'user_id', 'categories_id', 'price', 'description', 'slug'
+        'name', 'users_id', 'categories_id', 'price', 'description', 'slug'
     ];
 
     protected $hidden = [
@@ -24,7 +24,7 @@ class Product extends Model
 
     public function user()
     {
-        return $this->hasOne(User::class, 'id', 'user_id');
+        return $this->hasOne(User::class, 'id', 'users_id');
     }
 
     public function category()

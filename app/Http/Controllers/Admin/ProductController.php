@@ -106,7 +106,7 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        $item = Product::with(['category','user'])->findOrFail($id);
+        $item = Product::findOrFail($id);
         $users = User::all();
         $categories = Category::all();
 
@@ -117,13 +117,6 @@ class ProductController extends Controller
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(ProductRequest $request, $id)
     {
         $data = $request->all();
