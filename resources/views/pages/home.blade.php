@@ -102,7 +102,7 @@
                       data-aos="fade-up"
                       data-aos-delay="{{ $incremenCategory += 100 }}"
                   >
-                      <a href="{{ route('details', $product->slug) }}" class="component-products d-block">
+                      <a href="{{ route('detail', $product->slug) }}" class="component-products d-block">
                           <div class="products-thumbnail">
                               <div
                                   class="products-image"

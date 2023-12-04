@@ -52,7 +52,7 @@
 
 @push('addon-script')
     <script>
-        // AJAX DataTable
+        // AJAX tableTable
         var datatable = $('#crudTable').DataTable({
             processing: true,
             serverSide: true,
