@@ -41,66 +41,35 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td style="width: 25%">
-                      <img
-                        src="/images/product-cart.jpg"
-                        alt=""
-                        class="card-image w-100"
-                      />
-                    </td>
-                    <td style="width: 35%">
-                      <div class="product-title">Sofa Nyaman</div>
-                      <div class="product-subtitle">By Dipa Widia</div>
-                    </td>
-                    <td style="width: 35%">
-                      <div class="product-title">Rp. 2.000.000</div>
-                      <div class="product-subtitle">IDR</div>
-                    </td>
-                    <td style="width: 20%">
-                      <a href="#" class="btn btn-remove-cart">Remove</a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td style="width: 25%">
-                      <img
-                        src="/images/product-cart-2.jpg"
-                        alt=""
-                        class="card-image w-100"
-                      />
-                    </td>
-                    <td style="width: 35%">
-                      <div class="product-title">Sofa Nyaman</div>
-                      <div class="product-subtitle">By Dipa Widia</div>
-                    </td>
-                    <td style="width: 35%">
-                      <div class="product-title">Rp. 2.000.000</div>
-                      <div class="product-subtitle">IDR</div>
-                    </td>
-                    <td style="width: 20%">
-                      <a href="#" class="btn btn-remove-cart">Remove</a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td style="width: 25%">
-                      <img
-                        src="/images/product-cart-3.jpg"
-                        alt=""
-                        class="card-image w-100"
-                      />
-                    </td>
-                    <td style="width: 35%">
-                      <div class="product-title">Sofa Nyaman</div>
-                      <div class="product-subtitle">By Dipa Widia</div>
-                    </td>
-                    <td style="width: 35%">
-                      <div class="product-title">Rp. 2.000.000</div>
-                      <div class="product-subtitle">IDR</div>
-                    </td>
-                    <td style="width: 20%">
-                      <a href="#" class="btn btn-remove-cart">Remove</a>
-                    </td>
-                  </tr>
+                @foreach($carts as $cart)
+                    <tr>
+                        <td style="width: 25%">
+                            @if($cart->product->galleries)
+                                <img
+                                    src="{{ \Illuminate\Support\Facades\Storage::url($cart->product->galleries->first()->photos) }}"
+                                    alt=""
+                                    class="card-image w-100"
+                                />
+                            @endif
+                        </td>
+                        <td style="width: 35%">
+                            <div class="product-title">{{ $cart->product->name }}</div>
+                            <div class="product-subtitle">By {{ $cart->product->user->store_name }}</div>
+                        </td>
+                        <td style="width: 35%">
+                            <div class="product-title">Rp. {{ number_format($cart->product->price) }}</div>
+                            <div class="product-subtitle">IDR</div>
+                        </td>
+                        <td style="width: 20%">
+                            <form action="{{ route('cart-delete', $cart->id) }}" method="POST">
+                                @method('delete')
+                                @csrf
+                                <button type="submit" class="btn btn-remove-cart">Remove</button>
+                            </form>
+                        </td>
+                    </tr>
+
+                @endforeach
                 </tbody>
               </table>
             </div>
