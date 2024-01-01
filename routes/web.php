@@ -5,6 +5,8 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProductGalleryController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,22 +29,40 @@ Route::post('/detail/{id}', [App\Http\Controllers\DetailController::class, 'add'
 Route::get('/cart', [CartController::class, 'index'])->name('cart');
 Route::delete('/cart/{id}', [CartController::class, 'delete'])->name('cart-delete');
 
+Route::post('/checkout', [CheckoutController::class, 'process'])->name('checkout');
+Route::post('/checkout/callback', [CheckoutController::class, 'callback'])->name('midtrans-callback');
+
 Route::get('/success', [App\Http\Controllers\CartController::class, 'success'])->name('success');
 
 Route::get('/register/success', [App\Http\Controllers\Auth\RegisterController::class, 'success'])->name('register-success');
 
-Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
-Route::get('/dashboard/products', [App\Http\Controllers\DashboardProductController::class, 'index'])->name('dashboard-product');
-Route::get('/dashboard/products/create', [App\Http\Controllers\DashboardProductController::class, 'create'])->name('dashboard-product-create');
-Route::get('/dashboard/products/{id}', [App\Http\Controllers\DashboardProductController::class, 'details'])->name('dashboard-product-details');
+Route::group(['middleware' => ['auth']], function (){
+    Route::get('/cart', [CartController::class, 'index'])->name('cart');
+    Route::delete('/cart/{id}', [CartController::class, 'delete'])->name('cart-delete');
 
-Route::get('/dashboard/transactions', [App\Http\Controllers\DashboardTransactionController::class, 'index'])->name('dashboard-transaction');
-Route::get('/dashboard/transactions/{id}', [App\Http\Controllers\DashboardTransactionController::class, 'details'])->name('dashboard-transaction-details');
+    Route::post('/checkout', [CheckoutController::class, 'process'])->name('checkout');
+    Route::post('/checkout/callback', [CheckoutController::class, 'callback'])->name('midtrans-callback');
 
-Route::get('/dashboard/setting', [App\Http\Controllers\DashboardSettingController::class, 'store'])->name('dashboard-settings-store');
-Route::get('/dashboard/account', [App\Http\Controllers\DashboardSettingController::class, 'account'])->name('dashboard-settings-account');
+    Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard/products', [App\Http\Controllers\DashboardProductController::class, 'index'])->name('dashboard-product');
+    Route::get('/dashboard/products/create', [App\Http\Controllers\DashboardProductController::class, 'create'])->name('dashboard-product-create');
+    Route::post('/dashboard/products', [App\Http\Controllers\DashboardProductController::class, 'store'])->name('dashboard-product-store');
+    Route::get('/dashboard/products/{id}', [App\Http\Controllers\DashboardProductController::class, 'details'])->name('dashboard-product-details');
+    Route::post('/dashboard/products/{id}', [App\Http\Controllers\DashboardProductController::class, 'update'])->name('dashboard-product-update');
+
+    Route::post('/dashboard/products/gallery/upload', [App\Http\Controllers\DashboardProductController::class, 'uploadGallery'])->name('dashboard-product-gallery-upload');
+    Route::get('/dashboard/products/gallery/delete/{id}', [App\Http\Controllers\DashboardProductController::class, 'deleteGallery'])->name('dashboard-product-gallery-delete');
+
+
+    Route::get('/dashboard/transactions', [App\Http\Controllers\DashboardTransactionController::class, 'index'])->name('dashboard-transaction');
+    Route::get('/dashboard/transactions/{id}', [App\Http\Controllers\DashboardTransactionController::class, 'details'])->name('dashboard-transaction-details');
+
+    Route::get('/dashboard/setting', [App\Http\Controllers\DashboardSettingController::class, 'store'])->name('dashboard-settings-store');
+    Route::get('/dashboard/account', [App\Http\Controllers\DashboardSettingController::class, 'account'])->name('dashboard-settings-account');
+});
 
 Route::prefix('admin')
+    ->middleware(['auth', 'admin'])
     ->group(function (){
         Route::get('/', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('admin-dashboard');
         Route::resource('category', CategoryController::class);
