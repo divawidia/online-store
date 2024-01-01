@@ -24,7 +24,7 @@ class DashboardProductController extends Controller
 
     public function details(Request $request, $id)
     {
-        $product = Product::with((['galleries', 'user', 'category']))->firstOrFail($id);
+        $product = Product::with((['galleries', 'user', 'category']))->findOrFail($id);
         $categories = Category::all();
 
         return view('pages.dashboard-products-details', [
@@ -48,7 +48,7 @@ class DashboardProductController extends Controller
         $item = ProductGallery::findOrFail($id);
         $item->delete();
 
-        return redirect()->route('dashboard-products-details', $item->products_id);
+        return redirect()->route('dashboard-product-details', $item->products_id);
     }
 
     public function create()

@@ -62,8 +62,8 @@
                                                 <label>Kategori</label>
                                                 <select name="categories_id" class="form-control">
                                                     <option value="{{ $product->categories_id }}">Tidak diganti ({{ $product->category->name }})</option>
-                                                    @foreach ($categories as $categories)
-                                                        <option value="{{ $categories->id }}">{{ $categories->name }}</option>
+                                                    @foreach ($categories as $category)
+                                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>

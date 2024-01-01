@@ -33,7 +33,7 @@
                             >
                                 <div class="card-body">
                                     <img
-                                        src="{{ \Illuminate\Session\Store::url($product->galleries->first()->photos ?? '') }}"
+                                        src="{{ Storage::url($product->galleries->first()->photos ?? '') }}"
                                         alt=""
                                         class="w-100 mb-2"
                                     />
