@@ -4,9 +4,11 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProductGalleryController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\DashboardSettingController;
+use App\Http\Controllers\DashboardProductController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -35,7 +37,7 @@ Route::post('/checkout/callback', [CheckoutController::class, 'callback'])->name
 
 Route::get('/success', [App\Http\Controllers\CartController::class, 'success'])->name('success');
 
-Route::get('/register/success', [App\Http\Controllers\Auth\RegisterController::class, 'success'])->name('register-success');
+Route::get('/register/success', [RegisterController::class, 'success'])->name('register-success');
 
 Route::group(['middleware' => ['auth']], function (){
     Route::get('/cart', [CartController::class, 'index'])->name('cart');
@@ -45,11 +47,11 @@ Route::group(['middleware' => ['auth']], function (){
     Route::post('/checkout/callback', [CheckoutController::class, 'callback'])->name('midtrans-callback');
 
     Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/dashboard/products', [App\Http\Controllers\DashboardProductController::class, 'index'])->name('dashboard-product');
-    Route::get('/dashboard/products/create', [App\Http\Controllers\DashboardProductController::class, 'create'])->name('dashboard-product-create');
-    Route::post('/dashboard/products', [App\Http\Controllers\DashboardProductController::class, 'store'])->name('dashboard-product-store');
-    Route::get('/dashboard/products/{id}', [App\Http\Controllers\DashboardProductController::class, 'details'])->name('dashboard-product-details');
-    Route::post('/dashboard/products/{id}', [App\Http\Controllers\DashboardProductController::class, 'update'])->name('dashboard-product-update');
+    Route::get('/dashboard/products', [DashboardProductController::class, 'index'])->name('dashboard-product');
+    Route::get('/dashboard/products/create', [DashboardProductController::class, 'create'])->name('dashboard-product-create');
+    Route::post('/dashboard/products', [DashboardProductController::class, 'store'])->name('dashboard-product-store');
+    Route::get('/dashboard/products/{id}', [DashboardProductController::class, 'details'])->name('dashboard-product-details');
+    Route::post('/dashboard/products/{id}', [DashboardProductController::class, 'update'])->name('dashboard-product-update');
 
     Route::post('/dashboard/products/gallery/upload', [App\Http\Controllers\DashboardProductController::class, 'uploadGallery'])->name('dashboard-product-gallery-upload');
     Route::get('/dashboard/products/gallery/delete/{id}', [App\Http\Controllers\DashboardProductController::class, 'deleteGallery'])->name('dashboard-product-gallery-delete');
