@@ -100,5 +100,5 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
-          script: whoami
-#          script: cd ${{ secrets.SSH_PATH }} && ./.scripts/deploy.sh
+#          script: whoami
+          script: cd ${{ secrets.SSH_PATH }} && ./.scripts/deploy.sh
