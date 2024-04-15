@@ -101,4 +101,4 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
 #          script: whoami
-          script: cd ${{ secrets.SSH_PATH }} && ./.scripts/script.sh
+          script: cd /home/divawidia-online-store/htdocs/online-store.divawidia.my.id/ && ./.scripts/script.sh
