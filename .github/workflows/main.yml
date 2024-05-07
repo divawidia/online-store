@@ -100,5 +100,4 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
-#          script: whoami
-          script: cd /home/divawidia-online-store/htdocs/online-store.divawidia.my.id/online-store/ && chmod -v +x ./scripts/script.sh && ./scripts/script.sh
+          script: cd /home/divawidia-store/htdocs/online-store/ && chmod -v +x ./scripts/script.sh && ./scripts/script.sh
