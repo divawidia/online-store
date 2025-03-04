@@ -12,15 +12,9 @@
     <title>@yield('title')</title>
 
     @stack('prepend-style')
-    <script
-        src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
-        crossorigin="anonymous"
-    ></script>
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
-    <link href="/style/main.css" rel="stylesheet" />
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.css"/>
+    @include('includes.style')
     @stack('addon-style')
+    @vite(['resources/sass/app.scss', 'resources/js/app.js',])
 </head>
 
 <body>
@@ -147,22 +141,19 @@
 
 <!-- Bootstrap core JavaScript -->
 @stack('prepend-script')
-<script src="/vendor/jquery/jquery.min.js"></script>
-<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.js"></script>
-<script>
-    $("#datatable").DataTable();
-</script>
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-<script>
-    AOS.init();
-</script>
-<script>
-    $("#menu-toggle").click(function (e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
-    });
-</script>
+@include('includes.script')
+{{--<script src="/vendor/jquery/jquery.min.js"></script>--}}
+{{--<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>--}}
+{{--<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.js"></script>--}}
+{{--<script>--}}
+{{--    $("#datatable").DataTable();--}}
+{{--</script>--}}
+{{--<script>--}}
+{{--    $("#menu-toggle").click(function (e) {--}}
+{{--        e.preventDefault();--}}
+{{--        $("#wrapper").toggleClass("toggled");--}}
+{{--    });--}}
+{{--</script>--}}
 @stack('addon-script')
 </body>
 </html>
