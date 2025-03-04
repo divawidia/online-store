@@ -162,13 +162,10 @@
 @endsection
 
 @push('addon-script')
-    <script src="/vendor/vue/vue.js"></script>
-    <script src="https://unpkg.com/vue-toasted"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
         Vue.use(Toasted);
 
-        var register = new Vue({
+        const register = new Vue({
             el: "#register",
             mounted() {
                 AOS.init();
@@ -176,14 +173,14 @@
             },
             methods: {
                 checkForEmailAvailability: function () {
-                    var self = this;
+                    const self = this;
                     axios.get('{{ route('api-register-check') }}', {
                         params: {
                             email: this.email
                         }
                     })
                         .then(function (response) {
-                            if(response.data == 'Available') {
+                            if (response.data === 'Available') {
                                 self.$toasted.show(
                                     "Email anda tersedia! Silahkan lanjut langkah selanjutnya!", {
                                         position: "top-center",
