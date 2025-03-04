@@ -15,7 +15,7 @@
     @stack('prepend-style')
     @include('includes.style')
     @stack('addon-style')
-    
+      @vite(['resources/sass/app.scss', 'resources/js/app.js',])
   </head>
 
   <body>
@@ -24,11 +24,11 @@
 
     <!-- Page Content -->
     @yield('content')
-    
+
 
     {{-- footer --}}
     @include('includes.footer')
-    
+
     <!-- Bootstrap core JavaScript -->
     {{-- script --}}
     @stack('prepend-script')
