@@ -51,8 +51,7 @@
 
 @push('addon-script')
     <script>
-        // AJAX DataTable
-        var datatable = $('#crudTable').DataTable({
+        $('#crudTable').DataTable({
             processing: true,
             serverSide: true,
             ordering: true,
@@ -64,13 +63,7 @@
                 { data: 'name', name: 'name' },
                 { data: 'photo', name: 'photo' },
                 { data: 'slug', name: 'slug' },
-                {
-                    data: 'action',
-                    name: 'action',
-                    orderable: false,
-                    searchable: false,
-                    width: '15%'
-                },
+                {data: 'action', name: 'action', orderable: false, searchable: false, width: '15%'},
             ]
         });
     </script>
