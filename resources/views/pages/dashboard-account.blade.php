@@ -6,10 +6,7 @@
 
 @section('content')
     <!-- Section Content -->
-    <div
-        class="section-content section-dashboard-home"
-        data-aos="fade-up"
-    >
+    <div class="section-content section-dashboard-home" data-aos="fade-up">
         <div class="container-fluid">
             <div class="dashboard-heading">
                 <h2 class="dashboard-title">My Account</h2>
@@ -84,7 +81,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="regencies_id">City</label>
+                                                <label for="regencies_id">Regency</label>
                                                 <select name="regencies_id" id="regencies_id" class="form-control" v-model="regencies_id" v-if="regencies">
                                                     <option v-for="regency in regencies" :value="regency.id">@{{regency.name }}</option>
                                                 </select>
@@ -150,9 +147,6 @@
 
 
 @push('addon-script')
-    <script src="/vendor/vue/vue.js"></script>
-    <script src="https://unpkg.com/vue-toasted"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
         var locations = new Vue({
             el: "#locations",
