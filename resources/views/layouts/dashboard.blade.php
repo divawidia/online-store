@@ -65,7 +65,7 @@
                         <ul class="navbar-nav d-none d-lg-flex ml-auto">
                             <li class="nav-item dropdown">
                                 <a href="#" class="nav-link" id="navbarDropdown" role="button" data-toggle="dropdown">
-                                    <img src="{{asset('/images/icon-user.png')}}" alt="user" class="rounded-circle mr-2 profile-picture"/>
+                                    <img src="{{asset('/images/user-circle.png')}}" alt="user" class="rounded-circle mr-2 profile-picture"/>
                                     Hi, {{ Auth::user()->name }}
                                 </a>
                                 <div class="dropdown-menu">
