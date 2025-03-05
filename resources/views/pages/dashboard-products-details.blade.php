@@ -6,16 +6,11 @@
 
 @section('content')
     <!-- Section Content -->
-    <div
-        class="section-content section-dashboard-home"
-        data-aos="fade-up"
-    >
+    <div class="section-content section-dashboard-home" data-aos="fade-up">
         <div class="container-fluid">
             <div class="dashboard-heading">
                 <h2 class="dashboard-title">Shirup Marzan</h2>
-                <p class="dashboard-subtitle">
-                    Product Details
-                </p>
+                <p class="dashboard-subtitle">Product Details</p>
             </div>
             <div class="dashboard-content">
                 <div class="row">
@@ -38,23 +33,13 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Product Name</label>
-                                                <input
-                                                    type="text"
-                                                    name="name"
-                                                    class="form-control"
-                                                    value="{{ $product->name }}"
-                                                />
+                                                <input type="text" name="name" class="form-control" value="{{ $product->name }}"/>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Price</label>
-                                                <input
-                                                    type="number"
-                                                    name="price"
-                                                    class="form-control"
-                                                    value="{{ $product->price }}"
-                                                />
+                                                <input type="number" name="price" class="form-control" value="{{ $product->price }}"/>
                                             </div>
                                         </div>
                                         <div class="col-md-12">
@@ -77,10 +62,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="col text-right">
-                                            <button
-                                                type="submit"
-                                                class="btn btn-success px-5 btn-block"
-                                            >
+                                            <button type="submit" class="btn btn-success px-5 btn-block">
                                                 Save Now
                                             </button>
                                         </div>
@@ -98,13 +80,9 @@
                                     @foreach ($product->galleries as $gallery)
                                         <div class="col-md-4">
                                             <div class="gallery-container">
-                                                <img
-                                                    src="{{ Storage::url($gallery->photos ?? '') }}"
-                                                    alt=""
-                                                    class="w-100"
-                                                />
+                                                <img src="{{ Storage::url($gallery->photos ?? '') }}" alt="" class="w-100"/>
                                                 <a href="{{ route('dashboard-product-gallery-delete', $gallery->id) }}" class="delete-gallery">
-                                                    <img src="/images/icon-delete.svg" alt="" />
+                                                    <img src="{{asset('/images/icon-delete.svg')}}" alt="" />
                                                 </a>
                                             </div>
                                         </div>
@@ -113,19 +91,8 @@
                                         <form action="{{ route('dashboard-product-gallery-upload') }}" method="POST" enctype="multipart/form-data">
                                             @csrf
                                             <input type="hidden" value="{{ $product->id }}" name="products_id">
-                                            <input
-                                                type="file"
-                                                name="photos"
-                                                id="file"
-                                                style="display: none;"
-                                                multiple
-                                                onchange="form.submit()"
-                                            />
-                                            <button
-                                                type="button"
-                                                class="btn btn-secondary btn-block mt-3"
-                                                onclick="thisFileUpload()"
-                                            >
+                                            <input type="file" name="photos" id="file" style="display: none;" multiple onchange="form.submit()"/>
+                                            <button type="button" class="btn btn-secondary btn-block mt-3" onclick="thisFileUpload()">
                                                 Add Photo
                                             </button>
                                         </form>
@@ -141,7 +108,7 @@
 @endsection
 
 @push('addon-script')
-    <script src="https://cdn.ckeditor.com/4.14.0/standard/ckeditor.js"></script>
+    <script src="//cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
     <script>
         function thisFileUpload() {
             document.getElementById("file").click();
