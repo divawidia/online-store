@@ -30,12 +30,7 @@
                             </li>
                         </ul>
                         <div class="tab-content" id="pills-tabContent">
-                            <div
-                                class="tab-pane fade show active"
-                                id="pills-home"
-                                role="tabpanel"
-                                aria-labelledby="pills-home-tab"
-                            >
+                            <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
                                 @foreach ($sellTransactions as $transaction)
                                     <a href="{{ route('dashboard-transaction-details', $transaction->id) }}" class="card card-list">
                                         <div class="card-body">
