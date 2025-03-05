@@ -42,14 +42,14 @@
                     <div class="col-12 mt-2">
                         <h5 class="mb-3">Recent Transactions</h5>
                         @if(count($transaction_data) == 0)
-                            <h6 class="text-muted text-center">There is no transactions at this moment</h6>
+                            <h5 class="text-muted text-center">There is no transactions at this moment</h5>
                         @endif
-                        @foreach($transaction_data as $trasaction)
-                            <a href="{{ route('dashboard-transaction-details', $trasaction->id) }}" class="card card-list d-block">
+                        @foreach($transaction_data as $transaction)
+                            <a href="{{ route('dashboard-transaction-details', $transaction->id) }}" class="card card-list">
                                 <div class="card-body">
-                                    <div class="row">
+                                    <div class="row d-flex align-items-center">
                                         <div class="col-md-1">
-                                            <img src="{{ Storage::url($trasaction->product->galleries->first()->photos ?? '') }}" class="w-75" alt="{{ $trasaction->product->name }}"/>
+                                            <img src="{{ Storage::url($transaction->product->galleries->first()->photos ?? '') }}" class="w-75" alt="{{ $transaction->product->name }}"/>
                                         </div>
                                         <div class="col-md-4">{{ $transaction->product->name ?? '' }}</div>
                                         <div class="col-md-3">{{ $transaction->transaction->user->name ?? '' }}</div>
