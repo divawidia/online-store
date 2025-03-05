@@ -108,13 +108,9 @@
 @endsection
 
 @push('addon-script')
-    <script src="//cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
     <script>
         function thisFileUpload() {
             document.getElementById("file").click();
         }
-    </script>
-    <script>
-        CKEDITOR.replace("editor");
     </script>
 @endpush

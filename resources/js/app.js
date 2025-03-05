@@ -9,4 +9,6 @@ $(function () {
         e.preventDefault();
         $("#wrapper").toggleClass("toggled");
     });
+
+    CKEDITOR.replace("editor");
 });
