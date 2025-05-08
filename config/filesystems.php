@@ -56,6 +56,12 @@ return [
             'throw' => false,
         ],
 
+        'azure' => [ 
+            'driver' => 'azure-storage-blob',
+            'connection_string' => env('AZURE_STORAGE_CONNECTION_STRING'),
+            'container' => env('AZURE_STORAGE_CONTAINER'),
+        ],
+
     ],
 
     /*
