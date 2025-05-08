@@ -34,11 +34,11 @@
         </section>
         <section class="store-trend-categories mt-4">
             <div class="container">
-                <div class="row">
-                    <div class="col-12" data-aos="fade-up">
-                        <h5>All Categories</h5>
-                    </div>
-                </div>
+{{--                <div class="row">--}}
+{{--                    <div class="col-12" data-aos="fade-up">--}}
+{{--                        <h5>All Categories</h5>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
                 <div class="row">
                     @php $incremenCategory = 0 @endphp
                     @forelse($categories as $category)
