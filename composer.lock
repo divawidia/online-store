@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "180d041f7e14b7ae0d297ea1f91070ab",
+    "content-hash": "6ad2378700cb24797d02731dcaa7b9f9",
     "packages": [
         {
             "name": "azishapidin/indoregion",
@@ -10329,7 +10329,7 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "^8.1"
+        "php": "^8.2"
     },
     "platform-dev": [],
     "plugin-api-version": "2.6.0"
