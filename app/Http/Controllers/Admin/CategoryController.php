@@ -7,6 +7,7 @@ use App\Http\Requests\Admin\CategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Session\Store;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Yajra\DataTables\Facades\DataTables;
@@ -72,7 +73,14 @@ class CategoryController extends Controller
         $data = $request->all();
 
         $data['slug'] = Str::slug($request->name);
-        $data['photo'] = $request->file('photo')->store('assets/category', 'public');
+
+        try {
+            // Store the file to Azure Blob Storage
+            $data['photo'] = Storage::disk('azure')->putFile('assets/category', $data['photo']);
+        } catch (\Exception $e) {
+            Log::error('Azure upload error: ' . $e->getMessage());
+        }
+
 
         Category::create($data);
 
@@ -82,7 +90,7 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Category $category)
     {
         //
     }
@@ -90,27 +98,42 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Category $category)
     {
-        $item = Category::findOrFail($id);
-
         return view('pages.admin.category.edit', [
-           'item' => $item
+           'item' => $category
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(CategoryRequest $request, string $id)
+    public function update(CategoryRequest $request, Category $category)
     {
         $data = $request->all();
 
         $data['slug'] = Str::slug($request->name);
-        $data['photo'] = $request->file('photo')->store('assets/category', 'public');
 
-        $item = Category::findOrFail($id);
-        $item->update($data);
+        // check if the edited category have photo, then delete the previous photo
+        if ($data['photo'] !== null) {
+            if (Storage::disk('azure')->exists($category->photo)){
+                try {
+                    // Store the file to Azure Blob Storage
+                    Storage::disk('azure')->delete($category->photo);
+                } catch (\Exception $e) {
+                    Log::error('Azure upload error: ' . $e->getMessage());
+                }
+            }
+        }
+
+        try {
+            // Store the file to Azure Blob Storage
+            $data['photo'] = Storage::disk('azure')->putFile('assets/category', $data['photo']);
+        } catch (\Exception $e) {
+            Log::error('Azure upload error: ' . $e->getMessage());
+        }
+
+        $category->update($data);
 
         return redirect()->route('category.index');
     }
@@ -118,10 +141,18 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Category $category)
     {
-        $item = Category::findOrFail($id);
-        $item->delete();
+        if (Storage::disk('azure')->exists($category->photo)){
+            try {
+                // Store the file to Azure Blob Storage
+                Storage::disk('azure')->delete($category->photo);
+            } catch (\Exception $e) {
+                Log::error('Azure upload error: ' . $e->getMessage());
+            }
+        }
+
+        $category->delete();
 
         return redirect()->route('category.index');
     }
