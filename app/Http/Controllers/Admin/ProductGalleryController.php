@@ -9,6 +9,7 @@ use App\Models\Product;
 use App\Http\Requests\Admin\ProductGalleryRequest;
 
 use App\Models\ProductGallery;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -65,7 +66,12 @@ class ProductGalleryController extends Controller
     {
         $data = $request->all();
 
-        $data['photos'] = $request->file('photos')->store('assets/product', 'public');
+        try {
+            // Store the file to Azure Blob Storage
+            $data['photos'] = Storage::disk('azure')->putFile('assets/product', $data['photos']);
+        } catch (\Exception $e) {
+            Log::error('Azure upload error: ' . $e->getMessage());
+        }
 
         ProductGallery::create($data);
 
@@ -87,10 +93,19 @@ class ProductGalleryController extends Controller
         //
     }
 
-    public function destroy($id)
+    public function destroy(string $id)
     {
-        $item = ProductGallery::findorFail($id);
-        $item->delete();
+        $gallery = ProductGallery::findOrFail($id);
+
+        if (Storage::disk('azure')->exists($gallery->photos)){
+            try {
+                // Store the file to Azure Blob Storage
+                Storage::disk('azure')->delete($gallery->photos);
+            } catch (\Exception $e) {
+                Log::error('Azure upload error: ' . $e->getMessage());
+            }
+        }
+        $gallery->delete();
 
         return redirect()->route('product-gallery.index');
 

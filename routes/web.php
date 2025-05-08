@@ -4,7 +4,6 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProductGalleryController;
 use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\DashboardSettingController;
@@ -37,7 +36,7 @@ Route::post('/checkout/callback', [CheckoutController::class, 'callback'])->name
 
 Route::get('/success', [App\Http\Controllers\CartController::class, 'success'])->name('success');
 
-Route::get('/register/success', [RegisterController::class, 'success'])->name('register-success');
+Route::get('/register/success', [App\Http\Controllers\Auth\RegisterController::class, 'success'])->name('register-success');
 
 Route::group(['middleware' => ['auth']], function (){
     Route::get('/cart', [CartController::class, 'index'])->name('cart');
