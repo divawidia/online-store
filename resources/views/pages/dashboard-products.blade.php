@@ -25,7 +25,12 @@
                         <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                             <a href="{{ route('dashboard-product-details', $product->id) }}" class="card card-dashboard-product d-block">
                                 <div class="card-body">
-                                    <img src="{{ Storage::url($product->galleries->first()->photos ?? '') }}" alt="" class="w-100 mb-2"/>
+                                    @if(count($product->galleries) > 0)
+                                        <img src="{{ Storage::url($product->galleries->first()->photos ?? '') }}" alt="" class="w-100 mb-2"/>
+                                    @else
+                                        <img src="" alt="no product photo" class="w-100 mb-2"/>
+                                    @endif
+
                                     <div class="product-title">{{ $product->name }}</div>
                                     <div class="product-category">{{ $product->category->name }}</div>
                                 </div>

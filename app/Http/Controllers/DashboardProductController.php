@@ -8,6 +8,8 @@ use App\Models\Product;
 use App\Models\ProductGallery;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class DashboardProductController extends Controller
@@ -20,9 +22,8 @@ class DashboardProductController extends Controller
         ]);
     }
 
-    public function details(Request $request, $id)
+    public function details(Product $product)
     {
-        $product = Product::with((['galleries', 'user', 'category']))->findOrFail($id);
         $categories = Category::all();
 
         return view('pages.dashboard-products-details', [
@@ -34,19 +35,31 @@ class DashboardProductController extends Controller
     public function uploadGallery(Request $request){
         $data = $request->all();
 
-        $data['photos'] = $request->file('photos')->store('assets/product', 'public');
+        try {
+            // Store the file to Azure Blob Storage
+            $data['photos'] = Storage::disk('azure')->putFile('assets/product', $data['photos']);
+        } catch (\Exception $e) {
+            Log::error('Azure upload error: ' . $e->getMessage());
+        }
 
         ProductGallery::create($data);
 
         return redirect()->route('dashboard-product-details', $request->products_id);
     }
 
-    public function deleteGallery(Request $request, $id)
+    public function deleteGallery(ProductGallery $gallery)
     {
-        $item = ProductGallery::findOrFail($id);
-        $item->delete();
+        if (Storage::disk('azure')->exists($gallery->photos)){
+            try {
+                // Store the file to Azure Blob Storage
+                Storage::disk('azure')->delete($gallery->photos);
+            } catch (\Exception $e) {
+                Log::error('Azure upload error: ' . $e->getMessage());
+            }
+        }
 
-        return redirect()->route('dashboard-product-details', $item->products_id);
+        $gallery->delete();
+        return redirect()->route('dashboard-product-details', $gallery->products_id);
     }
 
     public function create()
@@ -61,30 +74,24 @@ class DashboardProductController extends Controller
     public function store(ProductRequest $request)
     {
         $data = $request->all();
-
         $data['slug'] = Str::slug($request->name);
-
         $product = Product::create($data);
 
-        $gallery = [
-            'products_id' => $product->id,
-            'photos' => $request->file('photo')->store('assets/product', 'public')
-        ];
-
-        ProductGallery::create($gallery);
+        foreach ($data['photo'] as $photo) {
+            $photoData['photos'] = Storage::disk('azure')->putFile('assets/product', $photo);
+            $product->galleries()->create($photoData);
+        }
 
         return redirect()->route('dashboard-product');
     }
 
-    public function update(ProductRequest $request, $id)
+    public function update(ProductRequest $request, Product $product)
     {
         $data = $request->all();
 
-        $item = Product::findOrFail($id);
-
         $data['slug'] = Str::slug($request->name);
 
-        $item->update($data);
+        $product->update($data);
 
         return redirect()->route('dashboard-product');
     }
